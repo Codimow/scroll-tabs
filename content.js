@@ -4,16 +4,11 @@
                    document.querySelector('.tabbrowser-tabs') ||
                    document.getElementById('TabsToolbar');
     if (!tabBar) {
-      console.log("No tab bar found");
-      return false;
+      return e.clientY < 100;
     }
     
     const rect = tabBar.getBoundingClientRect();
-    const isOver = e.clientX >= rect.left && e.clientX <= rect.right &&
-           e.clientY >= rect.top && e.clientY <= rect.bottom;
-    
-    console.log("Tab bar rect:", rect, "Mouse:", e.clientX, e.clientY, "Is over:", isOver);
-    return isOver;
+    return e.clientY <= rect.bottom;
   }
   
   document.addEventListener('wheel', (e) => {
