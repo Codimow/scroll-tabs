@@ -14,6 +14,6 @@ browser.runtime.onMessage.addListener((message, sender) => {
       }
       
       browser.tabs.update(tabs[newIndex].id, { active: true });
-    });
+    }).catch(err => console.error("Tab switch error:", err));
   }
 });

@@ -18,19 +18,14 @@
   });
   
   document.addEventListener('wheel', (e) => {
-    if (isMiddleDown && e.button === 1) {
+    if (isMiddleDown) {
       const direction = e.deltaY > 0 ? 'down' : 'up';
       browser.runtime.sendMessage({
         action: 'switchTab',
         direction: direction
       });
       e.preventDefault();
+      e.stopPropagation();
     }
   }, { passive: false });
-  
-  document.addEventListener('contextmenu', (e) => {
-    if (e.button === 1) {
-      e.preventDefault();
-    }
-  });
 })();
