@@ -1,6 +1,7 @@
 browser.runtime.onMessage.addListener((message, sender) => {
   if (message.action === "switchTab") {
     const direction = message.direction;
+    console.log("Switch tab:", direction);
     
     browser.tabs.query({ currentWindow: true }).then(tabs => {
       const currentTab = tabs.find(t => t.active);
@@ -13,7 +14,12 @@ browser.runtime.onMessage.addListener((message, sender) => {
         newIndex = currentIndex < tabs.length - 1 ? currentIndex + 1 : 0;
       }
       
-      browser.tabs.update(tabs[newIndex].id, { active: true });
+      console.log("Switching to tab:", newIndex);
+      return browser.tabs.update(tabs[newIndex].id, { active: true });
     }).catch(err => console.error("Tab switch error:", err));
   }
+});
+
+browser.runtime.onInstalled.addListener(() => {
+  console.log("Tab Scroll Switcher installed");
 });
