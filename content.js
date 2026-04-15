@@ -1,27 +1,13 @@
 (function() {
-  function findTabBar() {
-    return document.querySelector('#tabbrowser-tabs') || 
-           document.querySelector('.tabbrowser-tabs') ||
-           document.querySelector('#TabsToolbar');
-  }
+  console.log("Tab Scroll Switcher loaded");
   
   document.addEventListener('wheel', (e) => {
-    const tabBar = findTabBar();
-    if (!tabBar) return;
+    console.log("Wheel event:", e.deltaY);
     
-    const target = e.target;
-    const isOverTabBar = tabBar.contains(target);
-    
-    console.log('Scroll detected:', e.deltaY, 'Over tab bar:', isOverTabBar);
-    
-    if (isOverTabBar) {
-      e.preventDefault();
-      e.stopPropagation();
-      
-      browser.runtime.sendMessage({
-        action: 'switchTab',
-        direction: e.deltaY > 0 ? 'down' : 'up'
-      });
-    }
+    const direction = e.deltaY > 0 ? 'down' : 'up';
+    browser.runtime.sendMessage({
+      action: 'switchTab',
+      direction: direction
+    });
   }, { passive: false });
 })();
